@@ -1,4 +1,0 @@
-- Seems to work fine for the most part
-- glmark result of 238
-- Same wifi issues as legacy (5.10) kernel - see notes there for fix
-- Not bothering to use much or benchmark with Geekbench
