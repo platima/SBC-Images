@@ -7,6 +7,9 @@ Apologies not all files have checksums. I get lazy, or forget. Either/or.
 # Changes
 
 ## Radxa
+**2025-06-03**
+- Updated [Rock 3A MainsailOS 1.3.2 based on Armbian Bookworm current minimal 6.1](Radxa/Rock%203A/MainsailOS) image to fix install issues.
+
 **2025-05-30**
 - Added [Rock 3A MainsailOS 1.3.2 based on Armbian Bookworm current minimal 6.1](Radxa/Rock%203A/MainsailOS) image. Testing today.
 - Minor structure cleanup
