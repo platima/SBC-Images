@@ -1,10 +1,31 @@
 # Linux Fastboot Commands for Orange Pi RV2 EMMC Flashing
 
-Note: these don't actually seem to work - it appears as a DFU device, but I would imagine you need to 'kick' it into fastboot mode, and I do not know how.
+_**Note**: these don't actually seem to work - it appears as a DFU device, but I would imagine you need to 'kick' it into fastboot mode, and I do not know how._
 
 ## Prerequisites
+Download the Orange Pi RV2 eMMC image files from their current location. Ref: http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-RV2.html (currently in a Google Drive link, and only Orange Pi OS available for eMMC.
+
+After extraction, your extracted zip should contain:
+```
+factory/
+├── FSBL.bin
+└── bootinfo_sd.bin
+gpt.img
+env.bin
+fw_dynamic.itb
+u-boot.itb
+boot.img
+ramdisk.img
+updater.img
+sys_prod.img
+chip_prod.img
+system.img
+vendor.img
+userdata.img
+```
+
+Install fastboot if not already available
 ```bash
-# Install fastboot if not already available
 sudo apt install fastboot  # Ubuntu/Debian
 # or
 sudo dnf install android-tools  # Fedora/RHEL
@@ -150,31 +171,4 @@ echo "Rebooting device..."
 fastboot reboot
 
 echo "Flashing complete!"
-```
-
-## Key Observations from the Log
-
-1. **Two-stage boot process**: First stages FSBL, continues boot, then flashes U-Boot
-2. **Sparse image handling**: Large images like `system.img` are automatically split into chunks
-3. **Error on misc partition**: The tool skipped the misc partition due to permission/file issues
-4. **Total process time**: About 2 minutes for the complete flash
-
-## File Structure Expected
-Your extracted zip should contain:
-```
-factory/
-├── FSBL.bin
-└── bootinfo_sd.bin
-gpt.img
-env.bin
-fw_dynamic.itb
-u-boot.itb
-boot.img
-ramdisk.img
-updater.img
-sys_prod.img
-chip_prod.img
-system.img
-vendor.img
-userdata.img
 ```
