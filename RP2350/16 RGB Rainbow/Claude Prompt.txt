@@ -1,0 +1,9 @@
+I am demonstrating a Raspberry Pi Pico 2 and need three code examples that demonstrate a rainbow running a ring of 16x WS2812's on GP28 / pin 34, which slowly gets faster and faster.
+
+1) Arduino using FastLED
+2) MicroPython
+3) C (in VS Code) using FastLED
+
+For that last one, I then want to demonstrate compiling it for ARM, and then for RISCV, so maybe if its RISCV the rainbow should run backwards. I'll need the compilation commands.
+
+I'm running on Linux Mint Mate 21.
