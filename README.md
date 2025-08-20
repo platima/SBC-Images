@@ -85,10 +85,17 @@ This repository contains SD card images for various configurations of the Luckfo
 
 These are built from the downloads available at the time, and have matching filenames, but do not require special software to image the TF/SD card with.
 
-**Last Updated:** 2024-07
+**Last Updated:** 2024-08
+**2025-08-20** Added [Lyra Pi Ubuntu](Luckfox/Lyra/Lyra%20Pi) images for W and non-W versions. These are in normal SD card image format for Disks/dd/Balena Etcher use.
+**2025-07-25** Added [Lyra Zero W Ubuntu](Luckfox/Lyra/Lyra%20Zero%20W) image, added SD image creation bash script (macOS and Linux)
 **2025-05 Notes:** I know, I need to cut some new SD card images. I have built them, just not converted to SD format yet.
 
-**2025-07-25** Added [Lyra Zero W Ubuntu](Luckfox/Lyra/Lyra%20Zero%20W) image, added SD image creation bash script (macOS and Linux)
+### Lyra Pi
+- Ubuntu-based
+  - `Luckfox_Lyra_Pi_W-2503_Ubuntu.img.bz2`
+  - `Luckfox_Lyra_Pi_W-2503_Ubuntu.img.bz2.sha256`
+  - `Luckfox_Lyra_Pi-2503_Ubuntu.img.bz2`
+  - `Luckfox_Lyra_Pi-2503_Ubuntu.img.bz2.sha256`
 
 ### Lyra Zero W
 - Ubuntu-based:
