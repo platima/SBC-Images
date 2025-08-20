@@ -30,7 +30,7 @@ Apologies not all files have checksums. I get lazy, or forget. Either/or.
 - Added [Rock 4 SE MainsailOS 1.3.2 images based on Armbian Bookworm current CLI](Radxa/Rock%204%20SE/MainsailOS) from above, as covered in [this video](https://www.youtube.com/watch?v=-j_Q4sIfp40).
 
 **2024-05-04**
-- Added [RKDevTool_Release_v2.96_en.zip][Radxa/RKDevTool_Release_v2.96_en.zip] for ease of access.
+- Added [RKDevTool_Release_v2.96_en.zip](Radxa/RKDevTool_Release_v2.96_en.zip) for ease of access.
 
 **2024-04-01**
 - Added [Rock 3A Armbian Unofficial 24.5 trunk Bookworm legacy 5.10 XFCE desktop](Radxa/Rock%203A/Armbian/bookworm%20legcy%20desktop%20xfce) image. Untested as per [notes.md](Radxa/Rock%203A/Armbian/bookworm%20legacy%20desktop%20xfce/notes.md) in that folder.
