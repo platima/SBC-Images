@@ -1,22 +1,21 @@
 #!/bin/bash
 
-# SD Card Image Creator for RK3506
+# SD Card Image Creator for RK3506 with Auto-Expanding RootFS
 # 
 # This script creates a GPT-partitioned SD card image with:
 # - Partition 1: U-Boot (4MB at sector 8192)  
 # - Partition 2: Kernel (12MB at sector 16384)
-# - Partition 3: RootFS (variable size at sector 65536)
+# - Partition 3: RootFS (original size + 4GB, auto-expanded)
 #
-# GPT (GUID Partition Table) requires knowing exact start AND end sectors
-# for each partition upfront, so we calculate the rootfs size dynamically
-# before creating the partition table.
+# The rootfs filesystem is automatically expanded to fill the partition,
+# so users get a ready-to-use image with extra space available.
 #
 # Compatible with Linux and macOS
 # Part of: https://github.com/platima/SBC-Images
 #
 # Prerequisites:
-#   Linux: sudo apt install gdisk
-#   macOS: brew install gptfdisk
+#   Linux: sudo apt install gdisk e2fsprogs
+#   macOS: brew install gptfdisk e2fsprogs
 
 ## NOTE
 ## The below is configured for the Luckfox Lyra Zero W
@@ -25,6 +24,7 @@
 # Configuration
 OUTPUT_IMG="$1"
 SECTOR_SIZE=512
+EXTRA_GB=4  # Extra space to add to rootfs partition
 
 # Source files
 UBOOT_IMG="u-boot/uboot.img"
@@ -40,12 +40,27 @@ P3_START=65536   # Start at 32MB offset
 
 # Check arguments
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 <output_filename.img>"
-    echo "Example: $0 rk3506-sdcard.img"
+    echo "Usage: sudo $0 <output_filename.img>"
+    echo "Example: sudo $0 rk3506-sdcard.img"
+    echo ""
+    echo "Note: This script requires root privileges for filesystem expansion"
     echo ""
     echo "Prerequisites:"
-    echo "  Linux: sudo apt install gdisk" 
-    echo "  macOS: brew install gptfdisk"
+    echo "  Linux: sudo apt install gdisk e2fsprogs" 
+    echo "  macOS: brew install gptfdisk e2fsprogs"
+    exit 1
+fi
+
+# Check for root privileges (required for losetup and filesystem operations)
+if [ "$EUID" -ne 0 ]; then
+    echo "Error: This script requires root privileges for filesystem expansion."
+    echo "Please run with sudo:"
+    echo "  sudo $0 $1"
+    echo ""
+    echo "Root privileges are needed for:"
+    echo "  - Creating loopback devices (losetup)"
+    echo "  - Running filesystem checks (e2fsck)"
+    echo "  - Resizing filesystems (resize2fs)"
     exit 1
 fi
 
@@ -67,25 +82,26 @@ case "$OS_TYPE" in
 esac
 
 # Check for required tools
-if ! command -v sgdisk &> /dev/null; then
-    echo "Error: sgdisk not found. Please install it:"
-    case "$OS_TYPE" in
-        Darwin)
-            echo "  brew install gptfdisk"
-            ;;
-        Linux)
-            echo "  sudo apt install gdisk    # Debian/Ubuntu"
-            echo "  sudo yum install gdisk    # RHEL/CentOS"
-            echo "  sudo pacman -S gptfdisk  # Arch Linux"
-            ;;
-        *)
-            echo "  Install gptfdisk/gdisk package for your distribution"
-            ;;
-    esac
-    exit 1
-fi
+for tool in sgdisk resize2fs e2fsck; do
+    if ! command -v $tool &> /dev/null; then
+        echo "Error: $tool not found. Please install it:"
+        case "$OS_TYPE" in
+            Darwin)
+                echo "  brew install gptfdisk e2fsprogs"
+                ;;
+            Linux)
+                echo "  sudo apt install gdisk e2fsprogs    # Debian/Ubuntu"
+                echo "  sudo yum install gdisk e2fsprogs    # RHEL/CentOS"
+                echo "  sudo pacman -S gptfdisk e2fsprogs   # Arch Linux"
+                ;;
+            *)
+                echo "  Install gptfdisk/gdisk and e2fsprogs packages for your distribution"
+                ;;
+        esac
+        exit 1
+    fi
+done
 
-# Calculate rootfs size in sectors (GPT needs exact end sector)
 # Verify all source files exist and get sizes
 echo "Checking source files..."
 for file in "$UBOOT_IMG" "$KERNEL_IMG" "$ROOTFS_IMG"; do
@@ -101,7 +117,7 @@ for file in "$UBOOT_IMG" "$KERNEL_IMG" "$ROOTFS_IMG"; do
     echo "  ✓ $file ($file_size bytes)"
 done
 
-# Calculate rootfs size in sectors (GPT needs exact end sector)
+# Calculate rootfs size in sectors with extra space
 echo "Calculating rootfs partition size..."
 ROOTFS_BYTES=$($STAT_SIZE_CMD "$ROOTFS_IMG" 2>/dev/null)
 if [ $? -ne 0 ] || [ "$ROOTFS_BYTES" -eq 0 ]; then
@@ -109,8 +125,13 @@ if [ $? -ne 0 ] || [ "$ROOTFS_BYTES" -eq 0 ]; then
     exit 1
 fi
 
-P3_SIZE=$(( (ROOTFS_BYTES + SECTOR_SIZE - 1) / SECTOR_SIZE ))  # Round up to nearest sector
-echo "RootFS size: $ROOTFS_BYTES bytes = $P3_SIZE sectors"
+# Add extra space to rootfs partition
+EXTRA_SECTORS=$(( EXTRA_GB * 1024 * 1024 * 1024 / SECTOR_SIZE ))  # Extra GB in sectors
+P3_SIZE=$(( (ROOTFS_BYTES + SECTOR_SIZE - 1) / SECTOR_SIZE + EXTRA_SECTORS ))  # Round up + extra space
+
+echo "RootFS original size: $ROOTFS_BYTES bytes"
+echo "Extra space added: ${EXTRA_GB}GB ($EXTRA_SECTORS sectors)"
+echo "Total rootfs partition: $P3_SIZE sectors"
 
 # Sanity check: rootfs should be at least 1MB
 if [ "$ROOTFS_BYTES" -lt 1048576 ]; then
@@ -129,7 +150,7 @@ IMAGE_SIZE=$(( TOTAL_SECTORS * SECTOR_SIZE ))
 echo "Creating SD card image: $OUTPUT_IMG"
 echo "Partition 1: sectors $P1_START-$(($P1_START + $P1_SIZE - 1)) (4MB, U-Boot)"
 echo "Partition 2: sectors $P2_START-$(($P2_START + $P2_SIZE - 1)) (12MB, Kernel)" 
-echo "Partition 3: sectors $P3_START-$(($P3_START + $P3_SIZE - 1)) ($(($ROOTFS_BYTES / 1024 / 1024))MB, RootFS)"
+echo "Partition 3: sectors $P3_START-$(($P3_START + $P3_SIZE - 1)) ($(( (P3_SIZE * SECTOR_SIZE) / 1024 / 1024))MB, RootFS)"
 echo "Total sectors: $TOTAL_SECTORS"
 echo "Total image size: $IMAGE_SIZE bytes ($(($IMAGE_SIZE / 1024 / 1024))MB)"
 
@@ -196,7 +217,47 @@ fi
 dd if="$ROOTFS_IMG" of="$OUTPUT_IMG" \
    bs=$SECTOR_SIZE seek=$P3_START conv=notrunc status=progress
 
-# Step 5: Verify partition table and image
+# Step 5: Expand the rootfs filesystem to fill the partition
+echo "Expanding rootfs filesystem to fill partition..."
+PARTITION_OFFSET=$(( P3_START * SECTOR_SIZE ))
+
+# Use loopback device to access the partition
+echo "Setting up loopback device for rootfs partition..."
+LOOP_DEVICE=$(losetup --show -f -o $PARTITION_OFFSET "$OUTPUT_IMG")
+if [ $? -ne 0 ] || [ -z "$LOOP_DEVICE" ]; then
+    echo "Error: Failed to create loopback device"
+    exit 1
+fi
+
+echo "Loopback device created: $LOOP_DEVICE"
+
+# Check filesystem before resize
+echo "Checking filesystem before resize..."
+e2fsck -f "$LOOP_DEVICE" || {
+    echo "Error: Filesystem check failed"
+    losetup -d "$LOOP_DEVICE"
+    exit 1
+}
+
+# Resize filesystem to fill the partition
+echo "Resizing filesystem to fill ${EXTRA_GB}GB larger partition..."
+resize2fs "$LOOP_DEVICE" || {
+    echo "Error: Filesystem resize failed"
+    losetup -d "$LOOP_DEVICE"
+    exit 1
+}
+
+# Verify the resize worked
+echo "Verifying filesystem after resize..."
+e2fsck -f "$LOOP_DEVICE" || {
+    echo "Warning: Filesystem check after resize reported issues"
+}
+
+# Clean up loopback device
+echo "Cleaning up loopback device..."
+losetup -d "$LOOP_DEVICE"
+
+# Step 6: Verify partition table and image
 echo "Verifying partition table..."
 sgdisk -p "$OUTPUT_IMG"
 
@@ -207,16 +268,22 @@ if [ "$ACTUAL_SIZE" -ne "$IMAGE_SIZE" ]; then
     echo "Warning: Image size mismatch!"
 fi
 
-# Step 6: Generate SHA256 checksum
+# Step 7: Generate SHA256 checksum
 echo "Generating SHA256 checksum..."
 SHA256_FILE="${OUTPUT_IMG}.sha256"
 sha256sum "$OUTPUT_IMG" > "$SHA256_FILE"
 echo "SHA256 checksum saved to: $SHA256_FILE"
 
+echo ""
+echo "=========================================="
 echo "SD card image created successfully: $OUTPUT_IMG"
 echo "Image size: $(ls -lh "$OUTPUT_IMG" | awk '{print $5}')"
+echo "RootFS has been expanded with ${EXTRA_GB}GB of additional space"
 echo "SHA256: $(cat "$SHA256_FILE")"
 echo ""
 echo "You can write it to an SD card using:"
 echo "  sudo dd if=$OUTPUT_IMG of=/dev/sdX bs=4M status=progress sync"
 echo "  (Replace /dev/sdX with your actual SD card device)"
+echo ""
+echo "Users will have the extra space available immediately after boot!"
+echo "=========================================="
