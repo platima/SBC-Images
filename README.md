@@ -158,7 +158,7 @@ After flashing, you may want to expand the root partition to use the full SD car
 
 ```bash
 # Download the expansion script
-wget https://raw.githubusercontent.com/[your-repo]/expand_partition.py
+wget https://raw.githubusercontent.com/platima/SBC-Images/expand_partition.py
 
 # Make it executable
 chmod +x expand_partition.py
