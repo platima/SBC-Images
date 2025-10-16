@@ -154,7 +154,7 @@ Always verify you're using the correct device path before flashing. Using the wr
 
 ### Expanding Root Partition
 
-After flashing, you may want to expand the root partition to use the full SD card space. You can do this using the provided Python script:
+After flashing, you may want to expand the root partition to use the full SD card space. You can do this using the provided Python script on a Linux host:
 
 ```bash
 # Download the expansion script
