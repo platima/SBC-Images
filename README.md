@@ -9,10 +9,10 @@ Apologies not all files have checksums. I get lazy, or forget. Either/or.
 # Changes
 
 ## Radxa
-**2024-06-03**
+**2025-06-03**
 - Updated [Rock 3A MainsailOS 1.3.2 based on Armbian Bookworm current minimal 6.1](Radxa/Rock%203A/MainsailOS) image to fix install issues.
 
-**2024-05-30**
+**2025-05-30**
 - Added [Rock 3A MainsailOS 1.3.2 based on Armbian Bookworm current minimal 6.1](Radxa/Rock%203A/MainsailOS) image. Testing today.
 - Minor structure cleanup
 
@@ -91,6 +91,20 @@ These are built from the downloads available at the time, and have matching file
 **2025-08-22** Added [Lyra Pi Ubuntu eMMC](Luckfox/Lyra/Lyra%20Pi) images for W and non-W versions. These are the same format as vendor images for flashing with RkDevTool or upgrade_tool.
 **2025-08-20** Added [Lyra Pi Ubuntu SD](Luckfox/Lyra/Lyra%20Pi) images for W and non-W versions. These are in normal SD card image format for Disks/dd/Balena Etcher use.
 **2025-07-25** Added [Lyra Zero W Ubuntu](Luckfox/Lyra/Lyra%20Zero%20W) image, added SD image creation bash script (macOS and Linux)
+
+### Popular/Recommended Images
+
+**Most Tested & Recommended:**
+- **Lyra Zero W**: `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2` - Well-tested SD card image
+- **Lyra Pi W**: `Luckfox_Lyra_Pi_W-2503_Ubuntu-SD.img.bz2` - Stable SD card image for Lyra Pi W
+- **Rock 3A**: `Armbian Unofficial 24.5 trunk Sid vendor 6.1 XFCE desktop` - Tested and used for over a year
+- **Pico Plus**: `Luckfox_Pico_Plus Buildroot-Flash_UART3` (2025-08-16) - Custom build with additional packages
+
+**Testing/Experimental:**
+- **Lyra Zero W with luckfox-config**: `Luckfox_Lyra_Zero_W-2503_Ubuntu_wConfig-TESTING.img.tar.bz2` - Appears to work
+- **Lyra Ultra W**: `Luckfox_Lyra_Ultra_W-2503_Ubuntu_eMMC.img.bz2` - Recently added, testing needed
+
+**Note:** Base Lyra and Lyra Plus images (241230 = Dec 2024) are 11 months old and may need updating.
 
 ### Image Format Note
 - **-SD.img.bz2**: SD card images for flashing with Balena Etcher, dd, or Disks (Linux)
