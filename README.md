@@ -9,10 +9,10 @@ Apologies not all files have checksums. I get lazy, or forget. Either/or.
 # Changes
 
 ## Radxa
-**2025-06-03**
+**2024-06-03**
 - Updated [Rock 3A MainsailOS 1.3.2 based on Armbian Bookworm current minimal 6.1](Radxa/Rock%203A/MainsailOS) image to fix install issues.
 
-**2025-05-30**
+**2024-05-30**
 - Added [Rock 3A MainsailOS 1.3.2 based on Armbian Bookworm current minimal 6.1](Radxa/Rock%203A/MainsailOS) image. Testing today.
 - Minor structure cleanup
 
@@ -75,33 +75,52 @@ These are MainsailOS
 **2025-05-16**
 - Added [5B MainsailOS 1.3.2 images based on Armbian 24.8 Jammy current 6.10](Orange%20Pi/5B/MainsailOS) which should work but are untested as per the [README.md](Orange%20Pi/5B/MainsailOS/README.md) in that folder.
 
-**2023-05-12**
+**2025-05-12**
 - Added [5B MainsailOS 1.3.2 images based on Armbian 24.8 Bookworm vendor 6.1](Orange%20Pi/5B/MainsailOS) which appeared to work but with Wi-Fi issues as per [README.md](Orange%20Pi/5B/MainsailOS/README.md) in that folder.
 - Added [MiniLoader files](Orange%20Pi/Tools/MiniLoader), [RKDevTool_Release_v3.15.zip](Orange%20Pi/Tools/RKDevTool_Release_v3.15.zip) and [DriverAssitant_v5.12.zip](Orange%20Pi/Tools/DriverAssitant_v5.12.zip).
 - Added [OrangePi_5B_RK3588S_User Manual_v1.5.1.pdf](Orange%20Pi/5B/OrangePi_5B_RK3588S_User%20Manual_v1.5.1.pdf).
 
 ## Luckfox
-This repository contains SD card images for various configurations of the Luckfox Lyra development board, including both Buildroot and Ubuntu-based systems.
+This repository contains SD card images for various configurations of the Luckfox Lyra and Pico development boards, including both Buildroot and Ubuntu-based systems.
 
-These are built from the downloads available at the time, and have matching filenames, but do not require special software to image the TF/SD card with.
+These are built from the downloads available at the time, and have matching filenames, but do not require special software to image the TF/SD card with (SD card images can be flashed with standard tools like Balena Etcher or dd).
 
-**Last Updated:** 2024-08
+**Last Updated:** 2025-11-13
+
+**2025-11-13** Added [Lyra Ultra W Ubuntu eMMC](Luckfox/Lyra/Lyra%20Ultra) images. Added testing build with luckfox-config for Lyra Zero W.
 **2025-08-22** Added [Lyra Pi Ubuntu eMMC](Luckfox/Lyra/Lyra%20Pi) images for W and non-W versions. These are the same format as vendor images for flashing with RkDevTool or upgrade_tool.
 **2025-08-20** Added [Lyra Pi Ubuntu SD](Luckfox/Lyra/Lyra%20Pi) images for W and non-W versions. These are in normal SD card image format for Disks/dd/Balena Etcher use.
 **2025-07-25** Added [Lyra Zero W Ubuntu](Luckfox/Lyra/Lyra%20Zero%20W) image, added SD image creation bash script (macOS and Linux)
-**2025-05 Notes:** I know, I need to cut some new SD card images. I have built them, just not converted to SD format yet.
+
+### Image Format Note
+- **-SD.img.bz2**: SD card images for flashing with Balena Etcher, dd, or Disks (Linux)
+- **-eMMC.tar.bz2**: eMMC flash images for flashing with RkDevTool or upgrade_tool
+- Files with SDK version in name (e.g., 2503) indicate the Luckfox SDK release version, not image creation date
+
+### Lyra Ultra W
+- Ubuntu-based (eMMC flash images):
+  - `Luckfox_Lyra_Ultra_W-2503_Ubuntu_eMMC.img.bz2`
+  - `Luckfox_Lyra_Ultra_W-2503_Ubuntu_eMMC.img.sha256`
 
 ### Lyra Pi
-- Ubuntu-based
-  - `Luckfox_Lyra_Pi_W-2503_Ubuntu.img.bz2`
-  - `Luckfox_Lyra_Pi_W-2503_Ubuntu.img.bz2.sha256`
-  - `Luckfox_Lyra_Pi-2503_Ubuntu.img.bz2`
-  - `Luckfox_Lyra_Pi-2503_Ubuntu.img.bz2.sha256`
+- Ubuntu-based (SD card images):
+  - `Luckfox_Lyra_Pi_W-2503_Ubuntu-SD.img.bz2`
+  - `Luckfox_Lyra_Pi_W-2503-Ubuntu-SD.img.bz2.sha256`
+  - `Luckfox_Lyra_Pi-2503-Ubuntu-SD.img.bz2`
+  - `Luckfox_Lyra_Pi-2503-Ubuntu-SD.img.bz2.sha256`
+- Ubuntu-based (eMMC flash images):
+  - `Luckfox_Lyra_Pi_W-2503-Ubuntu-eMMC.tar.bz2`
+  - `Luckfox_Lyra_Pi_W-2503-Ubuntu-eMMC.tar.bz2.sha256`
+  - `Luckfox_Lyra_Pi-2503-Ubuntu-eMMC.tar.bz2`
+  - `Luckfox_Lyra_Pi-2503-Ubuntu-eMMC.tar.bz2.sha256`
 
 ### Lyra Zero W
-- Ubuntu-based:
+- Ubuntu-based (SD card images):
   - `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2`
-  - `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2.sha256`
+  - `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2.sha256` (compressed image)
+  - `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.sha256` (uncompressed image)
+- Testing build with luckfox-config:
+  - `Luckfox_Lyra_Zero_W-2503_Ubuntu_wConfig-TESTING.img.tar.bz2` (includes luckfox-config, appears to work)
 
 ### Lyra (Base Model)
 - Buildroot-based:
@@ -118,6 +137,12 @@ These are built from the downloads available at the time, and have matching file
 - Ubuntu-based:
   - `Luckfox_Lyra_Plus_Ubuntu_MicroSD_241230.img.bz2`
   - `Luckfox_Lyra_Plus_Ubuntu_MicroSD_241230.img.sha256`
+
+### Pico Series
+See the [Pico README](Luckfox/Pico/README.md) for details on available images:
+- Pico Plus with Buildroot (2025-08-16) - includes UART3 support, minicom, iftop, vim, screen, and more
+- Pico Mini (A/B) Ubuntu with Ethernet (2024-06-02)
+- RV1103/RV1106 SD Ubuntu and Alpine builds
 
 ### Usage
 
@@ -158,13 +183,13 @@ After flashing, you may want to expand the root partition to use the full SD car
 
 ```bash
 # Download the expansion script
-wget https://raw.githubusercontent.com/platima/SBC-Images/expand_partition.py
+wget https://raw.githubusercontent.com/platima/SBC-Images/main/Luckfox/Lyra/Tools/Luckfox_Lyra_expand_partition.py
 
 # Make it executable
-chmod +x expand_partition.py
+chmod +x Luckfox_Lyra_expand_partition.py
 
 # Run as root (replace mmcblk0 with your device)
-sudo ./expand_partition.py /dev/mmcblk0
+sudo ./Luckfox_Lyra_expand_partition.py /dev/mmcblk0
 
 # Update kernel partition table
 sudo partx -u /dev/mmcblk0
@@ -174,6 +199,8 @@ sudo resize2fs /dev/mmcblk0p3
 ```
 
 Note: If you're running this on the Lyra board itself, the device will typically be /dev/mmcblk0. If you're preparing the card on a PC with a card reader, the device might be something like /dev/sdX.
+
+Alternatively, you can use the [Luckfox_make_SD_image.sh](Luckfox/Lyra/Tools/Luckfox_make_SD_image.sh) script to create SD card images with expanded partitions (macOS and Linux).
 
 ### Safety Checks
 Before running the expansion:
