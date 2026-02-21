@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Last Updated](https://img.shields.io/badge/Last%20Updated-2025--11--13-blue)
+![Last Updated](https://img.shields.io/badge/Last%20Updated-2026--02--04-blue)
 ![Platforms](https://img.shields.io/badge/Platforms-Radxa%20%7C%20Luckfox%20%7C%20Orange%20Pi-orange)
 <img src="https://visitor-badge.laobi.icu/badge?page_id=platima.sbcimages" height="20" />
 
@@ -42,8 +42,8 @@
 
 | Format | Description | Flash With |
 |--------|-------------|------------|
-| **-SD.img.bz2** | SD card images | Balena Etcher, dd, or Disks (Linux) |
-| **-eMMC.tar.bz2** | eMMC flash images | RkDevTool or upgrade_tool |
+| **-SD.img.bz2** or **MicroSD** | SD card images (microSD slot) | Balena Etcher, dd, or Disks (Linux) |
+| **-eMMC.tar.bz2** or **-eMMC.img.bz2** | eMMC flash images (onboard storage) | RkDevTool or upgrade_tool |
 
 > 💡 **Note:** Version numbers like "2503" indicate SDK release versions, not image creation dates.
 
@@ -92,10 +92,11 @@ These images are well-tested and recommended for daily use.
 
 | Board | Image | Status |
 |-------|-------|--------|
-| **Lyra Zero W** | `Luckfox_Lyra_Zero_W-2503_Ubuntu_wConfig-TESTING.img.tar.bz2` | ⚠️ Includes luckfox-config, appears to work |
-| **Lyra Ultra W** | `Luckfox_Lyra_Ultra_W-2503_Ubuntu_eMMC.img.bz2` | ⚠️ Recently added, testing needed |
+| **Lyra Zero W** | `Luckfox_Lyra_Zero_W-2503_Ubuntu_wConfig-TESTING.img.tar.bz2` | ⚠️ Includes luckfox-config, appears to work (SD card) |
+| **Lyra Zero W** | `Luckfox_Lyra_Zero_W_2512_Ubuntu.MicroSD.rar` | ⚠️ Unofficial Ubuntu build (forum-sourced), newer SDK 2512 (SD card) |
+| **Lyra Ultra W** | `Luckfox_Lyra_Ultra_W-2503_Ubuntu_eMMC.img.bz2` | ⚠️ Testing needed (eMMC) |
 
-> ⚠️ **Note:** Base Lyra and Lyra Plus images (241230 = Dec 2024) are 11 months old and may need updating.
+> ⚠️ **Note:** Base Lyra and Lyra Plus images (241230 = Dec 2024) are 14 months old and may need updating.
 
 [↑ Back to top](#sbc-images-repository)
 
@@ -110,11 +111,11 @@ SD card and eMMC images for Luckfox Lyra and Pico development boards. All SD car
 <details>
 <summary><b>📱 Lyra Ultra W</b> (Click to expand)</summary>
 
-#### eMMC Flash Images
+#### eMMC Flash Images (Ubuntu)
 - `Luckfox_Lyra_Ultra_W-2503_Ubuntu_eMMC.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Ultra/Luckfox_Lyra_Ultra_W-2503_Ubuntu_eMMC.img.bz2.sha256))
   - **OS:** Ubuntu
-  - **Type:** eMMC flash image
-  - **Status:** ⚠️ Recently added
+  - **Type:** eMMC flash image (onboard storage)
+  - **Status:** ⚠️ Testing needed
 
 [📁 Browse files](Luckfox/Lyra/Lyra%20Ultra)
 
@@ -124,12 +125,12 @@ SD card and eMMC images for Luckfox Lyra and Pico development boards. All SD car
 <summary><b>📱 Lyra Pi / Lyra Pi W</b> (Click to expand)</summary>
 
 #### SD Card Images (Ubuntu)
-- `Luckfox_Lyra_Pi_W-2503_Ubuntu-SD.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi_W-2503-Ubuntu-SD.img.bz2.sha256)) - **With WiFi**
-- `Luckfox_Lyra_Pi-2503-Ubuntu-SD.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi-2503-Ubuntu-SD.img.bz2.sha256)) - **Non-W version**
+- `Luckfox_Lyra_Pi_W-2503_Ubuntu-SD.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi_W-2503-Ubuntu-SD.img.bz2.sha256)) - **With WiFi** - microSD card
+- `Luckfox_Lyra_Pi-2503-Ubuntu-SD.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi-2503-Ubuntu-SD.img.bz2.sha256)) - **Non-W version** - microSD card
 
 #### eMMC Flash Images (Ubuntu)
-- `Luckfox_Lyra_Pi_W-2503-Ubuntu-eMMC.tar.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi_W-2503-Ubuntu-eMMC.tar.bz2.sha256)) - **With WiFi**
-- `Luckfox_Lyra_Pi-2503-Ubuntu-eMMC.tar.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi-2503-Ubuntu-eMMC.tar.bz2.sha256)) - **Non-W version**
+- `Luckfox_Lyra_Pi_W-2503-Ubuntu-eMMC.tar.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi_W-2503-Ubuntu-eMMC.tar.bz2.sha256)) - **With WiFi** - onboard eMMC
+- `Luckfox_Lyra_Pi-2503-Ubuntu-eMMC.tar.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Pi/Luckfox_Lyra_Pi-2503-Ubuntu-eMMC.tar.bz2.sha256)) - **Non-W version** - onboard eMMC
 
 [📁 Browse files](Luckfox/Lyra/Lyra%20Pi)
 
@@ -139,14 +140,21 @@ SD card and eMMC images for Luckfox Lyra and Pico development boards. All SD car
 <summary><b>📱 Lyra Zero W</b> (Click to expand)</summary>
 
 #### SD Card Images (Ubuntu)
-- `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Zero%20W/Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2.sha256)) - ⭐ **Recommended**
+- `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Zero%20W/Luckfox_Lyra_Zero_W-2503_Ubuntu.img.bz2.sha256)) - ⭐ **Recommended** - microSD card
   - Compressed image checksum
   - Uncompressed checksum: `Luckfox_Lyra_Zero_W-2503_Ubuntu.img.sha256`
+
+- `Luckfox_Lyra_Zero_W_2512_Ubuntu.MicroSD.rar` - microSD card
+  - **OS:** Ubuntu (Dec 2025 - SDK 2512)
+  - **Source:** ⚠️ Unofficial/community build (forum-sourced by user 'ubuntu', not officially sanctioned by Luckfox)
+  - **Status:** Testing needed
+  - Extract .rar to get .img file for flashing
 
 #### Testing Builds
 - `Luckfox_Lyra_Zero_W-2503_Ubuntu_wConfig-TESTING.img.tar.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Zero%20W/Luckfox_Lyra_Zero_W-2503_Ubuntu_wConfig-TESTING.img.tar.bz2.sha256))
   - Includes `luckfox-config` tool
   - ⚠️ Testing build - appears to work
+  - microSD card
 
 [📁 Browse files](Luckfox/Lyra/Lyra%20Zero%20W)
 
@@ -155,15 +163,15 @@ SD card and eMMC images for Luckfox Lyra and Pico development boards. All SD car
 <details>
 <summary><b>📱 Lyra (Base Model)</b> (Click to expand)</summary>
 
-#### Buildroot-based
+#### Buildroot-based (microSD card)
 - `Luckfox_Lyra_MicroSD_241230.img.bz2` ([SHA256](Luckfox/Lyra/Lyra/Luckfox_Lyra_MicroSD_241230.img.bz2.sha256))
   - Minimal, fast-booting system optimized for embedded applications
 
-#### Ubuntu-based
+#### Ubuntu-based (microSD card)
 - `Luckfox_Lyra_Ubuntu_MicroSD_241230.img.bz2` ([SHA256](Luckfox/Lyra/Lyra/Luckfox_Lyra_Ubuntu_MicroSD_241230.img.bz2.sha256))
   - Fuller glibc environment with additional packages and development tools
 
-> ⚠️ **Note:** These images are from Dec 2024 (11 months old)
+> ⚠️ **Note:** These images are from Dec 2024 (14 months old)
 
 [📁 Browse files](Luckfox/Lyra/Lyra)
 
@@ -172,13 +180,13 @@ SD card and eMMC images for Luckfox Lyra and Pico development boards. All SD car
 <details>
 <summary><b>📱 Lyra Plus</b> (Click to expand)</summary>
 
-#### Buildroot-based
+#### Buildroot-based (microSD card)
 - `Luckfox_Lyra_Plus_MicroSD_241230.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Plus/Luckfox_Lyra_Plus_MicroSD_241230.img.bz2.sha256))
 
-#### Ubuntu-based
+#### Ubuntu-based (microSD card)
 - `Luckfox_Lyra_Plus_Ubuntu_MicroSD_241230.img.bz2` ([SHA256](Luckfox/Lyra/Lyra%20Plus/Luckfox_Lyra_Plus_Ubuntu_MicroSD_241230.img.bz2.sha256))
 
-> ⚠️ **Note:** These images are from Dec 2024 (11 months old)
+> ⚠️ **Note:** These images are from Dec 2024 (14 months old)
 
 [📁 Browse files](Luckfox/Lyra/Lyra%20Plus)
 
@@ -452,6 +460,16 @@ Before running any disk operations:
 ---
 
 ## 📝 Changelog
+
+<details>
+<summary><b>Luckfox - 2026</b></summary>
+
+**2026-02-04**
+- ➕ Added [Lyra Zero W Ubuntu 2512 MicroSD](Luckfox/Lyra/Lyra%20Zero%20W) image (unofficial forum-sourced build)
+- 📝 Updated documentation to clarify SD card vs eMMC image types throughout
+- 📝 Updated age warnings for older images (Dec 2024 images now 14 months old)
+
+</details>
 
 <details>
 <summary><b>Luckfox - 2025</b></summary>
